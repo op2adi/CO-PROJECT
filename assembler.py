@@ -1,4 +1,5 @@
-fh=open("testcase.txt",'r+')
+# have to ask gupta about some issues faced by me in jump statements
+fh=open(r"D:\CO PROJECT @)@#\testcase.txt",'r+')
 dicttoholdval={'R0': '0000000000000000', 
                'R1': '0000000000000000',
                'R2': '0000000000000000',
@@ -6,15 +7,18 @@ dicttoholdval={'R0': '0000000000000000',
                'R4': '0000000000000000',
                'R5': '0000000000000000',
                'R6': '0000000000000000',
-               'FLAG': '0000000000000000'} # dictionary to hold value set pairs with registers
+               'FLAGS': '0000000000000000'} # dictionary to hold value set pairs with registers
+tmpdict=[] # to store variables
 dictregister={'R0':'000','R1':'001','R2':'010','R3':'011',"R4":'100',"R5":'101','R6':'110','FLAGS':'111'}
 l=[] # creating new list to add the series of intructions in stack form LIFO
-def stack(l,x):
+c=0
+fg=0
+def stack(l,x): # stack Maintaing machine codes works on lifo order
     # print(x)
     l.append(x)
-def printing(x):
+def printing(x): # helper function to print values checking errors
     print(x)
-def binaryToDecimal(binary):
+def binaryToDecimal(binary): # helper function to convert binary to decimal
  
     d=i=0
     while binary!=0:
@@ -23,108 +27,566 @@ def binaryToDecimal(binary):
         binary//=10
         i+=1
     return d
-while True:
-    k=fh.readline().split() # opening the file 
-    if k[0]=='add':
-        op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
-        dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
-        p='0000000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
-        # printing(dicttoholdval[k[1]])
-        stack(l,p)
-    elif k[0]=='mov' and k[2].count('$')==1:
-        dicttoholdval[k[1]]='0'*(16-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::])
-        p='000100'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
-        # printing(dicttoholdval[k[1]])
-        stack(l,p)
-    elif k[0]=='mov' and k[2].count('$'==0) :
-        dicttoholdval[k[1]]=dicttoholdval[k[2]]
-        op='0001100000'+dictregister[k[1]]+dictregister[k[2]]
-        # printing(dicttoholdval[k[1]])
-        stack(l,op)
-    elif k[0]=='sub':
-        op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
-        dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
-        p='0000100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
-        # printing(dicttoholdval[k[1]])
-        stack(l,p)
-    elif k[0]=='ld':
-        p='001000'+dictregister[k[1]]+dicttoholdval[k[2]]
-        dicttoholdval[k[1]]=dicttoholdval[k[2]]
-        stack(l,p)
-    elif k[0]=='st':
-        dicttoholdval[k[2]]=dicttoholdval[k[1]]
-        p='001010'+dictregister[k[1]]+dicttoholdval[k[1]][8:]
-        stack(l,p)
-    elif k[0]=='mul':
-        op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
-        dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
-        p='0011000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
-        # printing(dicttoholdval[k[1]])
-        stack(l,p)
-    elif k[0]=='div': # INCOMPLETE 
-        if int(dicttoholdval[k[3]])==0:
-            dicttoholdval['FLAG'][-4]=1
-            
-        op=binaryToDecimal(int(dicttoholdval[k[2]]))/binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
-        dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
-        p='0011000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
-        # printing(dicttoholdval[k[1]])
-        stack(l,p)
-    elif k[0]=='xor':
-        op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
-        op='0'*(16-len(str(op)))+str(op)
-        dicttoholdval[k[1]]=op
-        p='0101000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
-        stack(l,p)
-    elif k[0]=='rs' and k[2].count('$')==1:
-        op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
-        op=op>>int(k[2][1::]) # Right shiing of bits 
-        op=bin(op)[2::]
-        op='0'*(16-len(str(op)))+str(op)
-        dicttoholdval[k[1]]=op
-        ty='0'*(7-len(str((bin(int(k[2][1::])))[2::])))+str((bin(int(k[2][1::])))[2::]) # conversion in seven bits binary of entered value
-        p='010000'+dictregister[k[1]]+ty
-        # print(p)
-        stack(l,p)
-    elif k[0]=='ls' and k[2].count('$')==1:
-        op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
-        op=op<<int(k[2][1::]) # Left shiing of bits
-        op=bin(op)[2::]
-        op='0'*(16-len(str(op)))+str(op)
-        dicttoholdval[k[1]]=op
-        ty='0'*(7-len(str((bin(int(k[2][1::])))[2::])))+str((bin(int(k[2][1::])))[2::]) # conversion in seven bits binary of entered value
-        p='010010'+dictregister[k[1]]+ty
-        # print(p)
-        stack(l,p)
-    elif k[0]=='or':
-        op1=binaryToDecimal(int(dicttoholdval[k[2]]))
-        op2=binaryToDecimal(int(dicttoholdval[k[3]]))
-        opi=op1|op2
-        opi=bin(opi)[2::]
-        op='0'*(16-len(str(opi)))+str(opi)
-        # print(dicttoholdval)
-        dicttoholdval[k[1]]=op
-        p='0101100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
-        stack(l,p)
-    elif k[0]=='and':
-        op1=binaryToDecimal(int(dicttoholdval[k[2]]))
-        op2=binaryToDecimal(int(dicttoholdval[k[3]]))
-        opi=op1&op2
-        opi=bin(opi)[2::]
-        op='0'*(16-len(str(opi)))+str(opi)
-        # print(dicttoholdval)
-        dicttoholdval[k[1]]=op
-        p='0110000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
-        stack(l,p)
-    elif k[0]=='not':
-        pil,new_val=dicttoholdval[k[2]],''
-        for i in pil:
-            if i=='1':new_val+='0'
-            else: new_val+='1'
-        dicttoholdval[k[1]]=new_val
-        p='0110100000'+dictregister[k[1]]+dictregister[k[2]]
-        stack(l,p)
-    elif k[0]=='hlt':
+count=-1
+hlt_ct=0
+verdict=0
+while True:  # label handling and variable definations
+    ap=fh.readline()
+    pa=ap.split()
+    # print(pa)
+    if pa==[]:
+        pass
+    elif ap.count(':')==1:
+        dicttoholdval[pa[0]]='0'*(7-len(((str(bin(verdict)))[2::])))+((str(bin(verdict)))[2::])
+    elif ap.count(':')>1:
+        print("SYNTAX ERROR IN LABEL")
+        exit(0)
+    elif pa[0]!='var':
+        verdict+=1
+    elif pa[0]=='var':
+        tmpdict.append(pa[1])
+    elif 'hlt' in pa:
         break
-print(l)
-print(dicttoholdval)
+    if verdict>127:
+        break
+    verdict+=1
+fh.seek(0,0)
+fg=0
+while True:
+    p=fh.readline().split()
+    # print(p)
+    if p==[]:
+        pass
+    elif p[0]!='var' and p!=[]:
+        c+=1
+    elif 'jmp' in p:
+        op=fh.tell()
+        kop=c
+        while 1:
+            poc= fh.readline().split()
+            # print(poc)
+            if poc==[]:
+                pass
+            elif poc[0][0:-1]==p[1]:
+                break
+            kop+=1
+            if kop>127:
+                break
+        # print(kop)
+        dicttoholdval[p[1]]='0'*(7-len(str(bin(kop))[2::]))+(str(bin(kop))[2::])
+        fh.seek(op)
+    elif 'jlt' in p:
+        op=fh.tell()
+        kop=c
+        while 1:
+            poc= fh.readline().split()
+            # print(poc)
+            if poc==[]:
+                pass
+            elif poc[0][0:-1]==p[1]:
+                break
+            kop+=1
+            if kop>127:
+                break
+        # print(kop)
+        dicttoholdval[p[1]]='0'*(7-len(str(bin(kop))[2::]))+(str(bin(kop))[2::])
+        fh.seek(op)
+    elif 'jgt' in p:
+        op=fh.tell()
+        kop=c
+        while 1:
+            poc= fh.readline().split()
+            # print(poc)
+            if poc==[]:
+                pass
+            elif poc[0][0:-1]==p[1]:
+                break
+            kop+=1
+            if kop>127:
+                break
+        # print(kop)
+        dicttoholdval[p[1]]='0'*(7-len(str(bin(kop))[2::]))+(str(bin(kop))[2::])
+        fh.seek(op)
+    elif 'je' in p:
+        op=fh.tell()
+        kop=c
+        while 1:
+            poc= fh.readline().split()
+            # print(poc)
+            if poc==[]:
+                pass
+            elif poc[0][0:-1]==p[1]:
+                break
+            kop+=1
+            if kop>127:
+                break
+        # print(kop)
+        dicttoholdval[p[1]]='0'*(7-len(str(bin(kop))[2::]))+(str(bin(kop))[2::])
+        fh.seek(op)
+    if 'hlt' in p:
+        hlt_ct+=1
+    if count>127:
+        break
+    count+=1
+# print(c)
+fh.seek(0,0)
+aditya=0
+while True:
+    if not(hlt_ct):
+        print("HALT is missing")
+        exit(0)
+        break
+    if hlt_ct>1:
+        print("MORE THAN 1 HALT INSTRUCTION IS THERE")
+        exit()
+    try:
+        k=fh.readline().split() # opening the file 
+        # print(k)
+        if k[0]=='add':
+            fg=1
+            if len(k)>4:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)           
+            op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
+            dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
+            p='0000000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+            # printing(dicttoholdval[k[1]])
+            stack(l,p)
+        elif k[0]=='mov' and str(k[2]).count('$')==1:
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
+                print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
+                exit()
+            dicttoholdval[k[1]]='0'*(16-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::])
+            p='000100'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
+            # printing(dicttoholdval[k[1]])
+            stack(l,p)
+        elif k[0]=='mov' and str(k[2]).count('$')==0 :
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            dicttoholdval[k[1]]=dicttoholdval[k[2]]
+            op='0001100000'+dictregister[k[1]]+dictregister[k[2]]
+            # printing(dicttoholdval[k[1]])
+            stack(l,op)
+        elif k[0]=='sub':
+            fg=1
+            if len(k)>4:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
+            dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
+            p='0000100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+            # printing(dicttoholdval[k[1]])
+            stack(l,p)
+        elif k[0]=='ld':
+            fg=1
+            if k[2] not in tmpdict:
+                print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                exit(0)
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)            
+            dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
+            p='001000'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
+            stack(l,p)
+            c+=1
+        elif k[0]=='st':
+            fg=1
+            if k[2] not in tmpdict:
+                print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                exit(0)
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)           
+            dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
+            p='001010'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
+            stack(l,p)
+            c+=1
+        elif k[0]=='mul':
+            fg=1
+            if len(k)>4:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
+            dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
+            p='0011000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+            # printing(dicttoholdval[k[1]])
+            stack(l,p)
+        elif k[0]=='div': # INCOMPLETE 
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            p='0011100000'+dictregister[k[1]]+dictregister[k[2]]
+            stack(l,p)
+        elif k[0]=='xor':
+            fg=1
+            if len(k)>4:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
+            op='0'*(16-len(str(op)))+str(op)
+            dicttoholdval[k[1]]=op
+            p='0101000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+            stack(l,p)
+        elif k[0]=='rs' and k[2].count('$')==1:
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
+            op=op>>int(k[2][1::]) # Right shiing of bits 
+            op=bin(op)[2::]
+            op='0'*(16-len(str(op)))+str(op)
+            dicttoholdval[k[1]]=op
+            ty='0'*(7-len(str((bin(int(k[2][1::])))[2::])))+str((bin(int(k[2][1::])))[2::]) # conversion in seven bits binary of entered value
+            p='010000'+dictregister[k[1]]+ty
+            # print(p)
+            stack(l,p)
+        elif k[0]=='ls' and k[2].count('$')==1:
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
+            op=op<<int(k[2][1::]) # Left shiing of bits
+            op=bin(op)[2::]
+            op='0'*(16-len(str(op)))+str(op)
+            dicttoholdval[k[1]]=op
+            ty='0'*(7-len(str((bin(int(k[2][1::])))[2::])))+str((bin(int(k[2][1::])))[2::]) # conversion in seven bits binary of entered value
+            p='010010'+dictregister[k[1]]+ty
+            # print(p)
+            stack(l,p)
+        elif k[0]=='or':
+            fg=1
+            if len(k)>4:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op1=binaryToDecimal(int(dicttoholdval[k[2]]))
+            op2=binaryToDecimal(int(dicttoholdval[k[3]]))
+            opi=op1|op2
+            opi=bin(opi)[2::]
+            op='0'*(16-len(str(opi)))+str(opi)
+            # print(dicttoholdval)
+            dicttoholdval[k[1]]=op
+            p='0101100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
+            stack(l,p)
+        elif k[0]=='and':
+            fg=1
+            if len(k)>4:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            op1=binaryToDecimal(int(dicttoholdval[k[2]]))
+            op2=binaryToDecimal(int(dicttoholdval[k[3]]))
+            opi=op1&op2
+            opi=bin(opi)[2::]
+            op='0'*(16-len(str(opi)))+str(opi)
+            # print(dicttoholdval)
+            dicttoholdval[k[1]]=op
+            p='0110000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
+            stack(l,p)
+        elif k[0]=='not':
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            pil,new_val=dicttoholdval[k[2]],''
+            for i in pil:
+                if i=='1':new_val+='0'
+                else: new_val+='1'
+            dicttoholdval[k[1]]=new_val
+            p='0110100000'+dictregister[k[1]]+dictregister[k[2]]
+            stack(l,p)
+        elif k[0]=='cmp':
+            fg=1
+            if len(k)>3:
+                print("HAVE MORE ARGUEMENTS")
+                exit(0)
+            p='0111000000'+dictregister[k[1]]+dictregister[k[2]]
+            stack(l,p)
+        elif k[0]=='jmp':
+            fg=1
+            if len(k)>2:
+                print("HAVE MORE than 1 label")
+                exit(0)
+            p='011110000'+dicttoholdval[k[1]+':']
+            stack(l,p)
+        elif k[0]=='jlt':
+            fg=1
+            if len(k)>2:
+                print("HAVE MORE than 1 label")
+                exit(0)
+            p='11100000'+dicttoholdval[k[1]+':']
+            stack(l,p)
+        elif k[0]=='jgt':
+            fg=1
+            if len(k)>2:
+                print("HAVE MORE than 1 label")
+                exit(0)
+            p='111110000'+dicttoholdval[k[1]+':']
+            stack(l,p)
+        elif k[0]=='je':
+            fg=1
+            if len(k)>2:
+                print("HAVE MORE than 1 label")
+                exit(0)
+            p='111110000'+dicttoholdval[k[1]+':']
+            stack(l,p)
+        elif 'hlt' in k:
+            if len(k)!=1:
+                print("HAVE MORE than 1 label")
+                exit(0)
+            p='11010'+'0'*11
+            stack(l,p)
+            po=fh.readlines()
+            if po!=[]:
+                print("TRACED AN ERROR\nFOUND SOME COMMAND AFTER HALT INSTRUCTION")
+                exit()
+            break
+        elif k[0]=='var':
+            if (fg):
+                print("Variable declaration must not be after instruction")
+                exit(0)
+            pass
+        elif k[0].count(':')==1:
+            p=k.pop(0)
+            if k[0]=='add':
+                if len(k)>4:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)           
+                op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
+                dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
+                p='0000000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+                # printing(dicttoholdval[k[1]])
+                stack(l,p)
+            elif k[0]=='mov' and str(k[2]).count('$')==1:
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
+                    print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
+                    exit()
+                dicttoholdval[k[1]]='0'*(16-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::])
+                p='000100'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
+                # printing(dicttoholdval[k[1]])
+                stack(l,p)
+            elif k[0]=='mov' and str(k[2]).count('$')==0 :
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                dicttoholdval[k[1]]=dicttoholdval[k[2]]
+                op='0001100000'+dictregister[k[1]]+dictregister[k[2]]
+                # printing(dicttoholdval[k[1]])
+                stack(l,op)
+            elif k[0]=='sub':
+                if len(k)>4:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
+                dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
+                p='0000100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+                # printing(dicttoholdval[k[1]])
+                stack(l,p)
+            elif k[0]=='ld':
+                if k[2] not in tmpdict:
+                    print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                    exit(0)
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)            
+                dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
+                p='001000'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
+                stack(l,p)
+                c+=1
+            elif k[0]=='st':
+                if k[2] not in tmpdict:
+                    print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                    exit(0)
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)           
+                dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
+                p='001010'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
+                stack(l,p)
+                c+=1
+            elif k[0]=='mul':
+                if len(k)>4:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
+                dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
+                p='0011000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+                # printing(dicttoholdval[k[1]])
+                stack(l,p)
+            elif k[0]=='div': # INCOMPLETE 
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                p='0011100000'+dictregister[k[1]]+dictregister[k[2]]
+                stack(l,p)
+            elif k[0]=='xor':
+                if len(k)>4:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
+                op='0'*(16-len(str(op)))+str(op)
+                dicttoholdval[k[1]]=op
+                p='0101000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
+                stack(l,p)
+            elif k[0]=='rs' and k[2].count('$')==1:
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
+                op=op>>int(k[2][1::]) # Right shiing of bits 
+                op=bin(op)[2::]
+                op='0'*(16-len(str(op)))+str(op)
+                dicttoholdval[k[1]]=op
+                ty='0'*(7-len(str((bin(int(k[2][1::])))[2::])))+str((bin(int(k[2][1::])))[2::]) # conversion in seven bits binary of entered value
+                p='010000'+dictregister[k[1]]+ty
+                # print(p)
+                stack(l,p)
+            elif k[0]=='ls' and k[2].count('$')==1:
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
+                op=op<<int(k[2][1::]) # Left shiing of bits
+                op=bin(op)[2::]
+                op='0'*(16-len(str(op)))+str(op)
+                dicttoholdval[k[1]]=op
+                ty='0'*(7-len(str((bin(int(k[2][1::])))[2::])))+str((bin(int(k[2][1::])))[2::]) # conversion in seven bits binary of entered value
+                p='010010'+dictregister[k[1]]+ty
+                # print(p)
+                stack(l,p)
+            elif k[0]=='or':
+                if len(k)>4:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op1=binaryToDecimal(int(dicttoholdval[k[2]]))
+                op2=binaryToDecimal(int(dicttoholdval[k[3]]))
+                opi=op1|op2
+                opi=bin(opi)[2::]
+                op='0'*(16-len(str(opi)))+str(opi)
+                # print(dicttoholdval)
+                dicttoholdval[k[1]]=op
+                p='0101100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
+                stack(l,p)
+            elif k[0]=='and':
+                if len(k)>4:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                op1=binaryToDecimal(int(dicttoholdval[k[2]]))
+                op2=binaryToDecimal(int(dicttoholdval[k[3]]))
+                opi=op1&op2
+                opi=bin(opi)[2::]
+                op='0'*(16-len(str(opi)))+str(opi)
+                # print(dicttoholdval)
+                dicttoholdval[k[1]]=op
+                p='0110000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
+                stack(l,p)
+            elif k[0]=='not':
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                pil,new_val=dicttoholdval[k[2]],''
+                for i in pil:
+                    if i=='1':new_val+='0'
+                    else: new_val+='1'
+                dicttoholdval[k[1]]=new_val
+                p='0110100000'+dictregister[k[1]]+dictregister[k[2]]
+                stack(l,p)
+            elif k[0]=='cmp':
+                if len(k)>3:
+                    print("HAVE MORE ARGUEMENTS")
+                    exit(0)
+                p='0111000000'+dictregister[k[1]]+dictregister[k[2]]
+                stack(l,p)
+            elif k[0]=='jmp':
+                if len(k)>2:
+                    print("HAVE MORE than 1 label")
+                    exit(0)
+                p='011110000'+dicttoholdval[k[1]+':']
+                stack(l,p)
+            elif k[0]=='jlt':
+                if len(k)>2:
+                    print("HAVE MORE than 1 label")
+                    exit(0)
+                p='11100000'+dicttoholdval[k[1]+':']
+                stack(l,p)
+            elif k[0]=='jgt':
+                if len(k)>2:
+                    print("HAVE MORE than 1 label")
+                    exit(0)
+                p='111110000'+dicttoholdval[k[1]+':']
+                stack(l,p)
+            elif k[0]=='je':
+                if len(k)>2:
+                    print("HAVE MORE than 1 label")
+                    exit(0)
+                p='111110000'+dicttoholdval[k[1]+':']
+                stack(l,p)
+            elif 'hlt' in k:
+                if len(k)!=1:
+                    print("HAVE MORE than 1 label")
+                    exit(0)
+                p='11010'+'0'*11
+                stack(l,p)
+                po=fh.readlines()
+                if po!=[]:
+                    print("TRACED AN ERROR\nFOUND SOME COMMAND AFTER HALT INSTRUCTION")
+                    exit()
+                break
+            elif k[0]=='var':
+                pass
+            else:
+                print("SYNTAX ERROR INSTRUCTION NAME HAS AN ERROR")
+                exit(0)
+                break
+        else:
+            print("SYNTAX ERROR INSTRUCTION NAME HAS AN ERROR")
+            exit(0)
+            break
+        # aditya+=1
+        # print(aditya)
+        # print(l)
+    except KeyError:
+        if k[0]=='mov':
+            if k[2].count('$')==0:
+                print("either $ is missing of the register is not defined to hhold value")
+                exit(0)
+        if k[1] not in dicttoholdval:
+            print("Error: "+k[1]+" has some typo in it")
+            fg=1
+        elif k[0] in ['ld','st','jmp','je','jgt','je']:
+            if k[1] not in dictregister:
+                print(f"TYPO IN REGISTER NAME {k[1]} Or Label is not defined ")
+                fg=1
+            
+            elif k[2] not in dicttoholdval:
+                print(f'Either variable not defined or variable is greater than 127')
+                fg=1
+        else:
+            if k[1] not in dictregister:
+                print(f"TYPO IN REGISTER NAME {k[1]}")
+                fg=1
+            elif k[2] not in dictregister:
+                print(f"TYPO IN REGISTER NAME {k[2]}")
+                fg=1
+            elif k[3] not in dictregister:
+                print(f"TYPO IN REGISTER NAME {k[3]}")
+                fg=1  
+        if not(fg):
+            print("SYNTAX ERROR IN NAMING THE COMMAND")      
+        exit(0)  
+file_assembler=open('Machine_code.txt','w')
+for i in l:
+    file_assembler.write(i+'\n')
+print("SUCCESFULLY WRITTEN THE CONTENTS")
+
+
