@@ -144,8 +144,8 @@ while True:
         # print(k)
         if k[0]=='add':
             fg=1
-            if len(k)>4:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=4:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)           
             op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
             dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
@@ -154,8 +154,8 @@ while True:
             stack(l,p)
         elif k[0]=='mov' and str(k[2]).count('$')==1:
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                 print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
@@ -166,8 +166,8 @@ while True:
             stack(l,p)
         elif k[0]=='mov' and str(k[2]).count('$')==0 :
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             dicttoholdval[k[1]]=dicttoholdval[k[2]]
             op='0001100000'+dictregister[k[1]]+dictregister[k[2]]
@@ -175,8 +175,8 @@ while True:
             stack(l,op)
         elif k[0]=='sub':
             fg=1
-            if len(k)>4:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=4:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
             dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
@@ -186,10 +186,10 @@ while True:
         elif k[0]=='ld':
             fg=1
             if k[2] not in tmpdict:
-                print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                print(f"VARIABLE {k[2]} IS NOT DEFINED PLEASE CHECK")
                 exit(0)
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)            
             dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
             p='001000'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
@@ -198,10 +198,10 @@ while True:
         elif k[0]=='st':
             fg=1
             if k[2] not in tmpdict:
-                print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                print(f"VARIABLE {k[2]} IS NOT DEFINED PLEASE CHECK")
                 exit(0)
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)           
             dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
             p='001010'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
@@ -209,8 +209,8 @@ while True:
             c+=1
         elif k[0]=='mul':
             fg=1
-            if len(k)>4:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=4:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
             dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
@@ -219,15 +219,15 @@ while True:
             stack(l,p)
         elif k[0]=='div': # INCOMPLETE 
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             p='0011100000'+dictregister[k[1]]+dictregister[k[2]]
             stack(l,p)
         elif k[0]=='xor':
             fg=1
-            if len(k)>4:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=4:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
             op='0'*(16-len(str(op)))+str(op)
@@ -236,8 +236,8 @@ while True:
             stack(l,p)
         elif k[0]=='rs' and k[2].count('$')==1:
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
             op=op>>int(k[2][1::]) # Right shiing of bits 
@@ -250,8 +250,8 @@ while True:
             stack(l,p)
         elif k[0]=='ls' and k[2].count('$')==1:
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
             op=op<<int(k[2][1::]) # Left shiing of bits
@@ -264,8 +264,8 @@ while True:
             stack(l,p)
         elif k[0]=='or':
             fg=1
-            if len(k)>4:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=4:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op1=binaryToDecimal(int(dicttoholdval[k[2]]))
             op2=binaryToDecimal(int(dicttoholdval[k[3]]))
@@ -278,8 +278,8 @@ while True:
             stack(l,p)
         elif k[0]=='and':
             fg=1
-            if len(k)>4:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=4:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             op1=binaryToDecimal(int(dicttoholdval[k[2]]))
             op2=binaryToDecimal(int(dicttoholdval[k[3]]))
@@ -292,8 +292,8 @@ while True:
             stack(l,p)
         elif k[0]=='not':
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             pil,new_val=dicttoholdval[k[2]],''
             for i in pil:
@@ -304,35 +304,35 @@ while True:
             stack(l,p)
         elif k[0]=='cmp':
             fg=1
-            if len(k)>3:
-                print("HAVE MORE ARGUEMENTS")
+            if len(k)!=3:
+                print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 exit(0)
             p='0111000000'+dictregister[k[1]]+dictregister[k[2]]
             stack(l,p)
         elif k[0]=='jmp':
             fg=1
-            if len(k)>2:
+            if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 exit(0)
             p='011110000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif k[0]=='jlt':
             fg=1
-            if len(k)>2:
+            if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 exit(0)
             p='11100000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif k[0]=='jgt':
             fg=1
-            if len(k)>2:
+            if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 exit(0)
-            p='111110000'+dicttoholdval[k[1]+':']
+            p='111010000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif k[0]=='je':
             fg=1
-            if len(k)>2:
+            if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 exit(0)
             p='111110000'+dicttoholdval[k[1]+':']
@@ -356,8 +356,8 @@ while True:
         elif k[0].count(':')==1:
             p=k.pop(0)
             if k[0]=='add':
-                if len(k)>4:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=4:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)           
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
                 dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
@@ -365,8 +365,8 @@ while True:
                 # printing(dicttoholdval[k[1]])
                 stack(l,p)
             elif k[0]=='mov' and str(k[2]).count('$')==1:
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                     print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
@@ -376,16 +376,16 @@ while True:
                 # printing(dicttoholdval[k[1]])
                 stack(l,p)
             elif k[0]=='mov' and str(k[2]).count('$')==0 :
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 dicttoholdval[k[1]]=dicttoholdval[k[2]]
                 op='0001100000'+dictregister[k[1]]+dictregister[k[2]]
                 # printing(dicttoholdval[k[1]])
                 stack(l,op)
             elif k[0]=='sub':
-                if len(k)>4:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=4:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
                 dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
@@ -394,10 +394,10 @@ while True:
                 stack(l,p)
             elif k[0]=='ld':
                 if k[2] not in tmpdict:
-                    print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                    print(f"VARIABLE {k[2]} IS NOT DEFINED PLEASE CHECK")
                     exit(0)
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)            
                 dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
                 p='001000'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
@@ -405,18 +405,18 @@ while True:
                 c+=1
             elif k[0]=='st':
                 if k[2] not in tmpdict:
-                    print("VARIABLE IS NOT DEFINED PLEASE CHECK")
+                    print(f"VARIABLE {k[2]} IS NOT DEFINED PLEASE CHECK")
                     exit(0)
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)           
                 dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
                 p='001010'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
                 stack(l,p)
                 c+=1
             elif k[0]=='mul':
-                if len(k)>4:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=4:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
                 dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
@@ -424,14 +424,14 @@ while True:
                 # printing(dicttoholdval[k[1]])
                 stack(l,p)
             elif k[0]=='div': # INCOMPLETE 
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 p='0011100000'+dictregister[k[1]]+dictregister[k[2]]
                 stack(l,p)
             elif k[0]=='xor':
-                if len(k)>4:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=4:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
                 op='0'*(16-len(str(op)))+str(op)
@@ -439,8 +439,8 @@ while True:
                 p='0101000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
                 stack(l,p)
             elif k[0]=='rs' and k[2].count('$')==1:
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
                 op=op>>int(k[2][1::]) # Right shiing of bits 
@@ -452,8 +452,8 @@ while True:
                 # print(p)
                 stack(l,p)
             elif k[0]=='ls' and k[2].count('$')==1:
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op=binaryToDecimal(int(dicttoholdval[k[1]])) # conversion to decimal takes place here
                 op=op<<int(k[2][1::]) # Left shiing of bits
@@ -465,8 +465,8 @@ while True:
                 # print(p)
                 stack(l,p)
             elif k[0]=='or':
-                if len(k)>4:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=4:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op1=binaryToDecimal(int(dicttoholdval[k[2]]))
                 op2=binaryToDecimal(int(dicttoholdval[k[3]]))
@@ -478,8 +478,8 @@ while True:
                 p='0101100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
                 stack(l,p)
             elif k[0]=='and':
-                if len(k)>4:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=4:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 op1=binaryToDecimal(int(dicttoholdval[k[2]]))
                 op2=binaryToDecimal(int(dicttoholdval[k[3]]))
@@ -491,8 +491,8 @@ while True:
                 p='0110000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
                 stack(l,p)
             elif k[0]=='not':
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 pil,new_val=dicttoholdval[k[2]],''
                 for i in pil:
@@ -502,31 +502,31 @@ while True:
                 p='0110100000'+dictregister[k[1]]+dictregister[k[2]]
                 stack(l,p)
             elif k[0]=='cmp':
-                if len(k)>3:
-                    print("HAVE MORE ARGUEMENTS")
+                if len(k)!=3:
+                    print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     exit(0)
                 p='0111000000'+dictregister[k[1]]+dictregister[k[2]]
                 stack(l,p)
             elif k[0]=='jmp':
-                if len(k)>2:
+                if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     exit(0)
                 p='011110000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif k[0]=='jlt':
-                if len(k)>2:
+                if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     exit(0)
                 p='11100000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif k[0]=='jgt':
-                if len(k)>2:
+                if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     exit(0)
-                p='111110000'+dicttoholdval[k[1]+':']
+                p='111010000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif k[0]=='je':
-                if len(k)>2:
+                if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     exit(0)
                 p='111110000'+dicttoholdval[k[1]+':']
