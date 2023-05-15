@@ -337,7 +337,7 @@ while True:
                 exit(0)
             p='111110000'+dicttoholdval[k[1]+':']
             stack(l,p)
-        elif 'hlt' in k:
+        elif 'hlt' in k and k[0].count(':')==0:
             if len(k)!=1:
                 print("HAVE MORE than 1 label")
                 exit(0)
