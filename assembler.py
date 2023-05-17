@@ -48,8 +48,6 @@ while True:  # label handling and variable definations
             sys.exit()
         elif pa[0]=='var':
             tmpdict.append(pa[1])
-        if 'hlt' in pa:
-            break
         if verdict>127:
             break
         if pa[0]!='var':
