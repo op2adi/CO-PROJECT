@@ -147,7 +147,10 @@ for j in range(len(lopi)):
             fg=1
             if len(k)!=4:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
-                sys.exit()           
+                sys.exit()  
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)         
             op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
             dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
             p='0000000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
@@ -158,6 +161,9 @@ for j in range(len(lopi)):
             if len(k)!=3:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                 print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                 sys.exit()
@@ -179,6 +185,9 @@ for j in range(len(lopi)):
             if len(k)!=4:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
             dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
             p='0000100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
@@ -191,7 +200,10 @@ for j in range(len(lopi)):
                 sys.exit()
             if len(k)!=3:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
-                sys.exit()            
+                sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)              
             dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
             p='001000'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
             stack(l,p)
@@ -203,7 +215,10 @@ for j in range(len(lopi)):
                 sys.exit()
             if len(k)!=3:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
-                sys.exit()           
+                sys.exit() 
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)            
             dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
             p='001010'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
             stack(l,p)
@@ -213,6 +228,9 @@ for j in range(len(lopi)):
             if len(k)!=4:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
             dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
             p='0011000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
@@ -223,6 +241,9 @@ for j in range(len(lopi)):
             if len(k)!=3:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             p='0011100000'+dictregister[k[1]]+dictregister[k[2]]
             stack(l,p)
         elif k[0]=='xor':
@@ -230,6 +251,9 @@ for j in range(len(lopi)):
             if len(k)!=4:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
             op='0'*(16-len(str(op)))+str(op)
             dicttoholdval[k[1]]=op
@@ -268,6 +292,9 @@ for j in range(len(lopi)):
             if len(k)!=4:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             op1=binaryToDecimal(int(dicttoholdval[k[2]]))
             op2=binaryToDecimal(int(dicttoholdval[k[3]]))
             opi=op1|op2
@@ -282,6 +309,9 @@ for j in range(len(lopi)):
             if len(k)!=4:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             op1=binaryToDecimal(int(dicttoholdval[k[2]]))
             op2=binaryToDecimal(int(dicttoholdval[k[3]]))
             opi=op1&op2
@@ -296,6 +326,9 @@ for j in range(len(lopi)):
             if len(k)!=3:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             pil,new_val=dicttoholdval[k[2]],''
             for i in pil:
                 if i=='1':new_val+='0'
@@ -308,6 +341,9 @@ for j in range(len(lopi)):
             if len(k)!=3:
                 print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             p='0111000000'+dictregister[k[1]]+dictregister[k[2]]
             stack(l,p)
         elif k[0]=='jmp':
@@ -315,6 +351,9 @@ for j in range(len(lopi)):
             if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             p='011110000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif k[0]=='jlt':
@@ -322,6 +361,9 @@ for j in range(len(lopi)):
             if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             p='11100000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif k[0]=='jgt':
@@ -329,6 +371,9 @@ for j in range(len(lopi)):
             if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             p='111010000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif k[0]=='je':
@@ -336,6 +381,9 @@ for j in range(len(lopi)):
             if len(k)!=2:
                 print("HAVE MORE than 1 label")
                 sys.exit()
+            if 'FLAGS' in k:
+                print("Illegal use of Flags")
+                sys.exit(0)  
             p='111110000'+dicttoholdval[k[1]+':']
             stack(l,p)
         elif 'hlt' in k and k[0].count(':')==0:
@@ -358,7 +406,10 @@ for j in range(len(lopi)):
             if k[0]=='add':
                 if len(k)!=4:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
-                    sys.exit()           
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)             
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))+binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
                 dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
                 p='0000000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
@@ -368,6 +419,9 @@ for j in range(len(lopi)):
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                     print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                     sys.exit()
@@ -379,6 +433,9 @@ for j in range(len(lopi)):
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 dicttoholdval[k[1]]=dicttoholdval[k[2]]
                 op='0001100000'+dictregister[k[1]]+dictregister[k[2]]
                 # printing(dicttoholdval[k[1]])
@@ -387,6 +444,9 @@ for j in range(len(lopi)):
                 if len(k)!=4:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))-binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
                 dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
                 p='0000100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
@@ -398,7 +458,10 @@ for j in range(len(lopi)):
                     sys.exit()
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
-                    sys.exit()            
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)              
                 dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
                 p='001000'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
                 stack(l,p)
@@ -409,7 +472,10 @@ for j in range(len(lopi)):
                     sys.exit()
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
-                    sys.exit()           
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)             
                 dicttoholdval[k[2]]="0"*(16-len(str(bin(c))[2::]))+str(bin(c))[2::]
                 p='001010'+dictregister[k[1]]+dicttoholdval[k[2]][9:]
                 stack(l,p)
@@ -418,6 +484,9 @@ for j in range(len(lopi)):
                 if len(k)!=4:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]])) # storing the added values to a temp variable but in decimal 
                 dicttoholdval[k[1]]='0'*(16-len(str(bin(op))[2::]))+str(bin(op))[2::] # here  the register gets updated to new added values in the added previous registers that have 
                 p='0011000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] # we have to store it in 16 bits 5 bits reservered for opcode
@@ -427,12 +496,18 @@ for j in range(len(lopi)):
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 p='0011100000'+dictregister[k[1]]+dictregister[k[2]]
                 stack(l,p)
             elif k[0]=='xor':
                 if len(k)!=4:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 op=binaryToDecimal(int(dicttoholdval[k[2]]))*binaryToDecimal(int(dicttoholdval[k[3]]))
                 op='0'*(16-len(str(op)))+str(op)
                 dicttoholdval[k[1]]=op
@@ -468,6 +543,9 @@ for j in range(len(lopi)):
                 if len(k)!=4:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 op1=binaryToDecimal(int(dicttoholdval[k[2]]))
                 op2=binaryToDecimal(int(dicttoholdval[k[3]]))
                 opi=op1|op2
@@ -481,6 +559,9 @@ for j in range(len(lopi)):
                 if len(k)!=4:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 op1=binaryToDecimal(int(dicttoholdval[k[2]]))
                 op2=binaryToDecimal(int(dicttoholdval[k[3]]))
                 opi=op1&op2
@@ -494,6 +575,9 @@ for j in range(len(lopi)):
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 pil,new_val=dicttoholdval[k[2]],''
                 for i in pil:
                     if i=='1':new_val+='0'
@@ -505,30 +589,45 @@ for j in range(len(lopi)):
                 if len(k)!=3:
                     print("HAVE EITHER MORE ARGUEMENTS OR LESS ARGUEMENTS")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 p='0111000000'+dictregister[k[1]]+dictregister[k[2]]
                 stack(l,p)
             elif k[0]=='jmp':
                 if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 p='011110000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif k[0]=='jlt':
                 if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 p='11100000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif k[0]=='jgt':
                 if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 p='111010000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif k[0]=='je':
                 if len(k)!=2:
                     print("HAVE MORE than 1 label")
                     sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
                 p='111110000'+dicttoholdval[k[1]+':']
                 stack(l,p)
             elif 'hlt' in k:
