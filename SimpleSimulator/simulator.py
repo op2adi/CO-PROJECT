@@ -120,13 +120,17 @@ def binaryfloatconverter(binary_number):
     exp=binary_number[0:3]
     exp=binaryToDecimal(int(exp))
     mant=binary_number[3:]
+    # print(str(mant))
     fa=float('1.'+str(mant))
+    if exp==2:
+        fa=float('0.'+str(mant))
+        exp=3
     # print(fa)
     # print(exp)
     fa=fa*(10**(int(exp)-3))
     kappa=str(fa).split('.')
-    # print(kappa)
     kappa[1]=kappa[1][0:5]
+    # print(kappa)
     asdf=binaryToDecimal(int(kappa[0]))
     # print(asdf)
     udi=-1
@@ -134,6 +138,7 @@ def binaryfloatconverter(binary_number):
     for popcorn in kappa[1]:
         wer=2**udi
         bdsm+=int(popcorn)*wer
+        udi-=1
     # print(bdsm)
     # bdsm=binaryToDecimal(int(kappa[1]))
     # print(asdf+bdsm)
@@ -390,7 +395,7 @@ while i<len(lopi):
     elif lopi[i][0:5]=='10010':
         programcounter+=1
         decimal_number=lopi[i][8::]
-        dicttoholdval[dictregister[lopi[i][6:9]]]=decimal_number
+        dicttoholdval[dictregister[lopi[i][5:8]]]='0'*8+(decimal_number)
         fl()
         pc(programcounter)
         printingofregisters()
@@ -423,7 +428,7 @@ while i<len(lopi):
             pc(programcounter)
             printingofregisters()
         else:
-            dicttoholdval[dictregister[lopi[i][7:10]]]=a
+            dicttoholdval[dictregister[lopi[i][7:10]]]='0'*(16-len(str(bin(a))[2::]))+str(bin(a))[2::]
             fl()
             pc(programcounter)
             printingofregisters()
@@ -448,7 +453,7 @@ while i<len(lopi):
         a=dicttoholdval[dictregister[lopi[i][6:9]]]
         b=lopi[i][9::]
         # b='0'*(7-len(b))+b
-        s=a-b
+        s=binaryToDecimal(int(a))-binaryToDecimal(int(b))
         if s<0:
             dicttoholdval[dictregister[lopi[i][6:9]]]='0'*16
             dicttoholdval['FLAGS']=dicttoholdval['FLAGS'][0:12]+'1'+dicttoholdval['FLAGS'][13::]
@@ -464,7 +469,7 @@ while i<len(lopi):
         a=dicttoholdval[dictregister[lopi[i][6:9]]]
         b=lopi[i][9::]
         # b='0'*(7-len(b))+b
-        s=a*b
+        s=binaryToDecimal(int(a))*binaryToDecimal(int(b))
         if s>2**16-1:
             dicttoholdval[dictregister[lopi[i][6:9]]]='0'*16
             dicttoholdval['FLAGS']=dicttoholdval['FLAGS'][0:12]+'1'+dicttoholdval['FLAGS'][13::]
@@ -475,7 +480,7 @@ while i<len(lopi):
             fl()
             pc(programcounter)
             printingofregisters()
-    elif lopi[i]=='10111': # clears all registers and flags and all memory
+    elif lopi[i][0:5]=='10111': # clears all registers and flags and all memory
         programcounter+=1
         dicttoholdval={'R0': '0000000000000000', 
                'R1': '0000000000000000',
@@ -485,7 +490,7 @@ while i<len(lopi):
                'R5': '0000000000000000',
                'R6': '0000000000000000',
                'FLAGS': '0000000000000000'} 
-        mem_addr=[str((x*0))*16 for x in range(0,128)]
+        mem_addr=[str((x*0))*16 for x in range(0,128)] # will not clean instructions memory
         fl()
         pc(programcounter)
         printingofregisters()
