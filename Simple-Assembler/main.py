@@ -35,10 +35,8 @@ def decimal_to_binary_custom(decimal_number, integer_bits, fractional_bits):
         sys.exit(0)
     integer_part = int(decimal_number)
     fractional_part = decimal_number - integer_part
-
     # Convert integer part to binary
     binary_integer = bin(integer_part)[2:]
-
     # Convert fractional part to binary
     binary_fractional = ''
     # for _ in range(fractional_bits):
@@ -47,6 +45,12 @@ def decimal_to_binary_custom(decimal_number, integer_bits, fractional_bits):
     #     binary_fractional += str(bit)
     #     fractional_part -= bit
     c=5
+    exponent_bias = 3
+    if int(binary_integer)==0:
+        exponent_bias=2
+        exponent = len(binary_integer) -1 + exponent_bias
+        # fractional_part//=exponent
+    exponent = len(binary_integer) -1 + exponent_bias
     # print(len(str(binary_integer)))
     while fractional_part!=1:
         if c<=len(str(binary_integer))-1:
@@ -60,13 +64,12 @@ def decimal_to_binary_custom(decimal_number, integer_bits, fractional_bits):
         if fractional_part==0:
             fractional_part=1
         c-=1
+    # print(binary_fractional)
     # print(len(binary_fractional))
     # print(binary_fractional)
     # binary_fractional=binary_fractional+'0'*(5-len(binary_fractional))
     binary_fractional=binary_integer[1::]+binary_fractional+'0'*(5-len(binary_integer[1::]+binary_fractional))
     # Add bias of 3 to the exponent part
-    exponent_bias = 3
-    exponent = len(binary_integer) -1 + exponent_bias
     if exponent>7:
         print("OVERFLOW ERROR")
         sys.exit()
@@ -479,6 +482,9 @@ for j in range(len(lopi)):
             if 'FLAGS' in k:
                 print("Illegal use of Flags")
                 sys.exit(0)  
+            if k[2].count('$')!=1:
+                print("$ is missing")
+                sys.exit(0)
             if k[2][1::][0]=='-':
                 print("NEGATIVE VALUE ENTERED")
                 sys.exit(0)
@@ -492,7 +498,10 @@ for j in range(len(lopi)):
                 sys.exit()
             if 'FLAGS' in k:
                 print("Illegal use of Flags")
-                sys.exit(0)   
+                sys.exit(0) 
+            if k[2].count('$')!=1:
+                print("$ is missing")
+                sys.exit(0)  
             if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                 print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                 sys.exit()
@@ -505,6 +514,9 @@ for j in range(len(lopi)):
             if 'FLAGS' in k:
                 print("Illegal use of Flags")
                 sys.exit(0)   
+            if k[2].count('$')!=1:
+                print("$ is missing")
+                sys.exit(0)
             if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                 print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                 sys.exit()
@@ -516,7 +528,10 @@ for j in range(len(lopi)):
                 sys.exit()
             if 'FLAGS' in k:
                 print("Illegal use of Flags")
-                sys.exit(0)   
+                sys.exit(0) 
+            if k[2].count('$')!=1:
+                print("$ is missing")
+                sys.exit(0)  
             if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                 print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                 sys.exit()
@@ -528,7 +543,10 @@ for j in range(len(lopi)):
                 sys.exit()
             if 'FLAGS' in k:
                 print("Illegal use of Flags")
-                sys.exit(0)   
+                sys.exit(0) 
+            if k[2].count('$')!=1:
+                print("$ is missing")
+                sys.exit(0)  
             if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                 print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                 sys.exit()
@@ -796,7 +814,10 @@ for j in range(len(lopi)):
                     sys.exit()
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
-                    sys.exit(0)  
+                    sys.exit(0)
+                if k[2].count('$')!=1:
+                    print("$ is missing")
+                    sys.exit(0)
                 p='1000000'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
                 stack(l,p)
             elif k[0]=='subf':
@@ -806,6 +827,9 @@ for j in range(len(lopi)):
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
                     sys.exit(0)  
+                if k[2].count('$')!=1:
+                    print("$ is missing")
+                    sys.exit(0)
                 p='1000100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]]
                 stack(l,p)
             elif k[0]=='movf':
@@ -815,6 +839,9 @@ for j in range(len(lopi)):
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
                     sys.exit(0)  
+                if k[2].count('$')!=1:
+                    print("$ is missing")
+                    sys.exit(0)
                 if k[2][1::][0]=='-':
                     print("NEGATIVE VALUE ENTERED")
                     sys.exit(0)
@@ -829,6 +856,9 @@ for j in range(len(lopi)):
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
                     sys.exit(0)   
+                if k[2].count('$')!=1:
+                    print("$ is missing")
+                    sys.exit(0)
                 if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                     print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                     sys.exit()
@@ -840,7 +870,10 @@ for j in range(len(lopi)):
                     sys.exit()
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
-                    sys.exit(0)   
+                    sys.exit(0)  
+                if k[2].count('$')!=1:
+                    print("$ is missing")
+                    sys.exit(0) 
                 if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                     print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                     sys.exit()
@@ -853,6 +886,9 @@ for j in range(len(lopi)):
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
                     sys.exit(0)   
+                if k[2].count('$')!=1:
+                    print("$ is missing")
+                    sys.exit(0)
                 if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                     print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
                     sys.exit()
@@ -864,6 +900,9 @@ for j in range(len(lopi)):
                     sys.exit()
                 if 'FLAGS' in k:
                     print("Illegal use of Flags")
+                    sys.exit(0)
+                if k[2].count('$')!=1:
+                    print("$ is missing")
                     sys.exit(0)   
                 if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
                     print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
@@ -898,7 +937,7 @@ for j in range(len(lopi)):
     except KeyError:
         if k[0]=='mov':
             if k[2].count('$')==0:
-                print("either $ is missing of the register is not defined to hhold value")
+                print("either $ is missing of the register is not defined to hold value")
                 sys.exit()
         if k[1] not in dicttoholdval:
             print("Error: "+k[1]+" has some typo in it")
