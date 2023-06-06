@@ -546,7 +546,7 @@ for j in range(len(lopi)):
         elif k[0]=='clr':
             if len(k)!=1:
                 print("HAVE MORE ARGUEMENTS")
-                 sys.exit()
+                sys.exit()
             p='10111'+'0'*11
             stack(l,p)
         elif k[0].count(':')==1:
@@ -822,69 +822,69 @@ for j in range(len(lopi)):
                 binary_number = decimal_to_binary_custom(float(decimal_number), 3,5)
                 p='10010'+dictregister[k[1]]+binary_number
                 stack(l,p)
-              elif k[0]=='adi':
-            if len(k)!=3:
-                print("HAVE MORE ARGUEMENTS")
-                sys.exit()
-            if 'FLAGS' in k:
-                print("Illegal use of Flags")
-                sys.exit(0)   
-            if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
-                print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
-                sys.exit()
-            p='101000'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
-            stack(l,p)
-        elif k[0]=='sbi':
-            if len(k)!=3:
-                print("HAVE MORE ARGUEMENTS")
-                sys.exit()
-            if 'FLAGS' in k:
-                print("Illegal use of Flags")
-                sys.exit(0)   
-            if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
-                print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
-                sys.exit()
-            p='101010'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
-            stack(l,p)
-        elif k[0]=='mui':
-            if len(k)!=3:
-                print("HAVE MORE ARGUEMENTS")
-                sys.exit()
-            if 'FLAGS' in k:
-                print("Illegal use of Flags")
-                sys.exit(0)   
-            if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
-                print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
-                sys.exit()
-            p='101100'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
-            stack(l,p)
-        elif k[0]=='adi':
-            if len(k)!=3:
-                print("HAVE MORE ARGUEMENTS")
-                sys.exit()
-            if 'FLAGS' in k:
-                print("Illegal use of Flags")
-                sys.exit(0)   
-            if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
-                print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
-                sys.exit()
-            p='101000'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
-            stack(l,p)
-        elif k[0]=='exp':
-            if len(k)!=4:
-                print("HAVE MORE ARGUEMENTS")
-                sys.exit()
-            if 'FLAGS' in k:
-                print("Illegal use of Flags")
-                sys.exit(0)  
-            p='1001100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] 
-            stack(l,p)
-        elif k[0]=='clr':
-            if len(k)!=1:
-                print("HAVE MORE ARGUEMENTS")
-                 sys.exit()
-            p='10111'+'0'*11
-            stack(l,p)
+            elif k[0]=='adi':
+                if len(k)!=3:
+                    print("HAVE MORE ARGUEMENTS")
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)   
+                if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
+                    print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
+                    sys.exit()
+                p='101000'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
+                stack(l,p)
+            elif k[0]=='sbi':
+                if len(k)!=3:
+                    print("HAVE MORE ARGUEMENTS")
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)   
+                if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
+                    print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
+                    sys.exit()
+                p='101010'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
+                stack(l,p)
+            elif k[0]=='mui':
+                if len(k)!=3:
+                    print("HAVE MORE ARGUEMENTS")
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)   
+                if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
+                    print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
+                    sys.exit()
+                p='101100'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
+                stack(l,p)
+            elif k[0]=='adi':
+                if len(k)!=3:
+                    print("HAVE MORE ARGUEMENTS")
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)   
+                if int(str(k[2])[1::])>127 or int(str(k[2])[1::])<-128:
+                    print("ELEMENT GREATER THAN 7 BIT APOLOGY SORRY \U0001F622")
+                    sys.exit()
+                p='101000'+dictregister[k[1]]+('0'*(7-len((str(bin(int(k[2][1::])))[2::])))+(str(bin(int(k[2][1::])))[2::]))
+                stack(l,p)
+            elif k[0]=='exp':
+                if len(k)!=4:
+                    print("HAVE MORE ARGUEMENTS")
+                    sys.exit()
+                if 'FLAGS' in k:
+                    print("Illegal use of Flags")
+                    sys.exit(0)  
+                p='1001100'+dictregister[k[1]]+dictregister[k[2]]+dictregister[k[3]] 
+                stack(l,p)
+            elif k[0]=='clr':
+                if len(k)!=1:
+                    print("HAVE MORE ARGUEMENTS")
+                    sys.exit()
+                p='10111'+'0'*11
+                stack(l,p)
             else:
                 print("SYNTAX ERROR INSTRUCTION NAME HAS AN ERROR")
                 sys.exit()
