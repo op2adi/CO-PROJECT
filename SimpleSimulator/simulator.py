@@ -144,7 +144,7 @@ def binaryfloatconverter(binary_number):
         udi-=1
     # print(bdsm)
     # bdsm=binaryToDecimal(int(kappa[1]))
-    print(asdf+bdsm)
+#     print(asdf+bdsm)
     return asdf+bdsm
 
 
