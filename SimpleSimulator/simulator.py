@@ -128,8 +128,11 @@ def binaryfloatconverter(binary_number):
     # print(fa)
     # print(exp)
     fa=fa*(10**(int(exp)-3))
+    fa="{:.1f}".format(fa)
+    # print(fa)
+    # print(str(fa))
+    fa=str(fa)
     kappa=str(fa).split('.')
-    kappa[1]=kappa[1][0:5]
     # print(kappa)
     asdf=binaryToDecimal(int(kappa[0]))
     # print(asdf)
@@ -141,9 +144,8 @@ def binaryfloatconverter(binary_number):
         udi-=1
     # print(bdsm)
     # bdsm=binaryToDecimal(int(kappa[1]))
-    # print(asdf+bdsm)
+    print(asdf+bdsm)
     return asdf+bdsm
-    
 
 
 integer_bits = 3
